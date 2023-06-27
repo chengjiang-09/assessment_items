@@ -18,7 +18,6 @@ type ComponentAction = Record<AuthRoute.RouteComponentType, () => void>;
  */
 export function transformAuthRouteToVueRoute(item: AuthRoute.Route) {
   const resultRoute: RouteRecordRaw[] = [];
-
   const itemRoute = { ...item } as RouteRecordRaw;
 
   // 动态path

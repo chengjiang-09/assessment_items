@@ -11,11 +11,11 @@ declare namespace Auth {
   /** 用户信息 */
   interface UserInfo {
     /** 用户id */
-    userId: string;
+    user: Record<string, any>;
     /** 用户名 */
-    userName: string;
+    permissions: Array<string>;
     /** 用户角色类型 */
-    userRole: RoleType;
+    roles: Array<RoleType>;
   }
 }
 

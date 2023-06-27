@@ -69,7 +69,7 @@ export const useAuthStore = defineStore('auth-store', {
         if (route.isInitAuthRoute) {
           window.$notification?.success({
             title: '登录成功!',
-            content: `欢迎回来，${this.userInfo.userName}!`,
+            content: `欢迎回来，${this.userInfo.user.userName}!`,
             duration: 3000
           });
         }
@@ -116,6 +116,7 @@ export const useAuthStore = defineStore('auth-store', {
     async login(userName: string, password: string) {
       this.loginLoading = true;
       const { data } = await fetchLogin(userName, password);
+
       if (data) {
         await this.handleActionAfterLogin(data);
       }

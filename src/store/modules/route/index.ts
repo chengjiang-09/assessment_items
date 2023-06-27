@@ -110,20 +110,19 @@ export const useRouteStore = defineStore('route-store', {
       const { resetAuthStore } = useAuthStore();
       const { initHomeTab } = useTabStore();
 
-      const { userId } = localStg.get('userInfo') || {};
+      const { user } = localStg.get('userInfo') || {};
 
-      if (!userId) {
+      if (!user) {
         throw new Error('userId 不能为空!');
       }
-
-      const { error, data } = await fetchUserRoutes(userId);
+      const { error, data } = await fetchUserRoutes();
 
       if (!error) {
-        this.routeHomeName = data.home;
-        this.handleUpdateRootRedirect(data.home);
-        this.handleAuthRoute(sortRoutes(data.routes));
+        this.routeHomeName = data[0].name;
+        this.handleUpdateRootRedirect(data[0].name);
+        this.handleAuthRoute(sortRoutes(data));
 
-        initHomeTab(data.home, router);
+        initHomeTab(data[0].name, router);
 
         this.isInitAuthRoute = true;
       } else {
@@ -135,7 +134,7 @@ export const useRouteStore = defineStore('route-store', {
       const { initHomeTab } = useTabStore();
       const auth = useAuthStore();
 
-      const routes = filterAuthRoutesByUserPermission(staticRoutes, auth.userInfo.userRole);
+      const routes = filterAuthRoutesByUserPermission(staticRoutes, auth.userInfo.user.userRole);
       this.handleAuthRoute(routes);
 
       initHomeTab(this.routeHomeName, router);

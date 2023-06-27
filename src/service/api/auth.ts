@@ -32,7 +32,11 @@ export function fetchLogin(userName: string, password: string, isMock = false) {
 export function fetchUserInfo(isMock = false) {
   return isMock
     ? mockRequest.get<ApiAuth.UserInfo>('/getUserInfo')
-    : requestNew.get<ApiAuth.UserInfo>('/api/system/getInfo');
+    : requestNew.get<ApiAuth.UserInfo>('/api/system/getInfo', {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
 }
 
 /**
@@ -40,10 +44,14 @@ export function fetchUserInfo(isMock = false) {
  * @param userId - 用户id
  * @description 后端根据用户id查询到对应的角色类型，并将路由筛选出对应角色的路由数据返回前端
  */
-export function fetchUserRoutes(userId: string, isMock = false) {
+export function fetchUserRoutes(isMock = false) {
   return isMock
-    ? mockRequest.post<ApiRoute.Route>('/getUserRoutes', { userId })
-    : requestNew.post<ApiRoute.Route>('/api/system/menu/route', { userId });
+    ? mockRequest.get<ApiRoute.Route>('/getUserRoutes')
+    : requestNew.get<ApiRoute.Route>('/api/system/menu/route', {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
 }
 
 /**
