@@ -34,15 +34,15 @@ export function usePermission() {
   const auth = useAuthStore();
 
   function hasPermission(permission: Auth.RoleType | Auth.RoleType[]) {
-    const { userRole } = auth.userInfo;
+    const { roles } = auth.userInfo;
 
-    let has = userRole === 'super';
+    let has = roles[0] === 'super';
     if (!has) {
       if (isArray(permission)) {
-        has = (permission as Auth.RoleType[]).includes(userRole);
+        has = (permission as Auth.RoleType[]).includes(roles[0]);
       }
       if (isString(permission)) {
-        has = (permission as Auth.RoleType) === userRole;
+        has = (permission as Auth.RoleType) === roles[0];
       }
     }
     return has;
